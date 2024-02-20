@@ -4,8 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { RotatingLines } from "react-loader-spinner";
 import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "../redux/amazonSlice";
 const SignIn = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // firebase
   const auth = getAuth();
 
@@ -55,6 +58,14 @@ const SignIn = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+          dispatch(
+            setUserInfo({
+              __id: user.uid,
+              userName: user.displayName,
+              email: user.email,
+              image: user.photoURL,
+            })
+          );
           // console.log(user);
           setSucssMsg("Logged In Succssfully! Welcom You ");
 

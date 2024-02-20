@@ -20,6 +20,7 @@ const Layout = () => {
     <div>
       <Header />
       <ScrollRestoration />  {/* to scroll in page cart after clear data  */}
+      
       <Outlet />
       <Footer />
     </div>

@@ -7,18 +7,36 @@ import { allItems } from "../constans";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HeaderBottom from "./HeaderBottom";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuth, signOut } from "firebase/auth";
+import { userSignOut } from "../redux/amazonSlice";
+
 const Header = () => {
+  const auth = getAuth();
+  const dispatch = useDispatch()
   const products = useSelector((state) => state.amazonReducer.products);
-  console.log(products);
+  const userInfo = useSelector((state) => state.amazonReducer.userInfo);
+
   const [showAll, setShowAll] = useState(false);
   // console.log(showAll);
+
+  const handleLogOut = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("Sign-out successful.");
+        dispatch(userSignOut())
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="w-full  sticky top-0 z-50">
       <div className="w-full bg bg-amazon_blue text-white px-4 py-3 flex items-center gap-4 ">
         {/* Img Start Here */}
-        <Link to='/'>
+        <Link to="/">
           <div
             className="px-2  h-[80%] flex items-center border border-transparent hover:border-white cursor-pointer
   duration-100 "
@@ -97,12 +115,25 @@ const Header = () => {
             className="flex flex-col justify-center px-2  h-[80%]  items-center border border-transparent hover:border-white cursor-pointer
   duration-100 "
           >
-            <p
-              className="text-sm mdl:text-xs text-white mdl:text-lightText font-light 
+            {userInfo ? (
+              <p>
+                {" "}
+                <p
+                  className="text-sm mdl:text-xs text-white mdl:text-lightText font-light 
           "
-            >
-              Hello, sign in{" "}
-            </p>
+                >
+                  {userInfo.userName}
+                </p>
+              </p>
+            ) : (
+              <p
+                className="text-sm mdl:text-xs text-white mdl:text-lightText font-light 
+          "
+              >
+                Hello, sign in{" "}
+              </p>
+            )}
+
             <p className="text-sm font-semibold -mt-1 text-whiteText hidden mdl:inline-flex ">
               Accounts & Lists{" "}
               <span>
@@ -142,6 +173,17 @@ const Header = () => {
             <p className="text-xs font-semibold -mb-4 ">Cart</p>
           </div>
         </Link>
+        {userInfo && (
+          <div
+            onClick={handleLogOut}
+            className="flex flex-col justify-center items-center headerHover relative cursor-pointer"
+          >
+            <LogoutIcon />
+            <p className="hidden mdl:inline-flex text-xs font-semibold text-whiteText">
+              LogOut
+            </p>
+          </div>
+        )}
         {/* Cart End Here */}
       </div>
       <HeaderBottom />

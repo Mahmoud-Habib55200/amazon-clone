@@ -4,7 +4,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SideNavContent from "./SideNavContent";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
 const HeaderBottom = () => {
+  const userInfo = useSelector((state) => state.amazonReducer.userInfo);
   const [sideBar, setSideBar] = useState(false);
   // console.log(sideBar);
 
@@ -71,11 +73,23 @@ const HeaderBottom = () => {
               className="xs:w-[250px] md:w-[350px] h-full bg-white border border-black"
             >
               <div className="w-full bg-amazon_light text-white py-2 px-6 flex items-center gap-4">
-                <AccountCircleIcon />
-                <h3 className="font-titleFont font-bold text-lg tracking-wide  ">
-                  {" "}
-                  Hello, Sign In{" "}
-                </h3>
+                {/* <AccountCircleIcon /> */}
+                {userInfo ? (
+                  <img src={userInfo.image} alt="" />
+                ) : (
+                  <AccountCircleIcon />
+                )}
+                {userInfo ? (
+                  <h3 className="font-titleFont font-bold text-lg tracking-wide  ">
+                    {" "}
+                     {userInfo.userName}
+                  </h3>
+                ) : (
+                  <h3 className="font-titleFont font-bold text-lg tracking-wide  ">
+                    {" "}
+                    Hello, Sign In{" "}
+                  </h3>
+                )}
               </div>
               <SideNavContent
                 title="Digital Content & Devices"
