@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { emptyCart } from "../assets/index";
 import { motion } from "framer-motion";
+import "./cart.css";
 import {
   deleteItemInCart,
   clearAllItem,
@@ -26,9 +27,9 @@ const Cart = () => {
   }, [products]);
 
   return (
-    <div className="w-full bg-gray-100 p-4">
+    <div className="w-full  bg-gray-100 p-4 ">
       {products.length > 0 ? (
-        <div className="container mx-auto  h-auto grid grid-cols-5 gap-8">
+        <div className="container mx-auto h-auto grid grid-cols-5 gap-8 media">
           <div className="w-full h-full bg-white px-4 col-span-4">
             <div className=" font-titleFont flex items-center justify-between border-b-[1px] border-b-gray-400">
               <h2 className="text-3xl font-bold py-3 font-titleFont ">
@@ -46,15 +47,15 @@ const Cart = () => {
                   className=" w-full border-b-[1px] border-b-gray-300 p-4
               flex items-center gap-6"
                 >
-                  <div className="flex justify-center items-center gap-8">
-                    <div className="w-1/6">
+                  <div className="flex justify-center items-center gap-8 box ">
+                    <div className="w-1/6 ">
                       <img
-                        className=" w-full h-44 object-contain  "
+                        className=" w-full h-44 object-contain"
                         src={item.img}
                         alt="productImage"
                       />
                     </div>
-                    <div className="w-full">
+                    <div className="w-full box__content">
                       <h2 className="font-semibold text=lg">{item.title}</h2>
                       <p className="pr-10 text-sm">{item.description}</p>
                       <p className="text-base mt-2">
@@ -131,12 +132,12 @@ const Cart = () => {
           initial={{ y: 70, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="w-full flex items-center justify-center gap-4 mt-10 "
+          className="w-full flex items-center justify-center gap-4 mt-10 box__end"
         >
           <div className="">
             <img src={emptyCart} alt="" />
           </div>
-          <div className="w-[28%]  text-center p-4 bg-white  rounded-md shadow-lg">
+          <div className="w-[28%]  text-center p-4 bg-white  rounded-md shadow-lg box__end__column">
             <h1 className="font-titleFont text-xl font-bold mb-2">
               Your Cart feels lonely.
             </h1>
